@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Records</title>
+  </head>
+  <body>
+    <h1>Customer Records</h1>
+
+    <ul id="list"></ul>
+    <script>
+      const fetchRecords = async () => {
+        const response = await fetch("http://localhost:3333/api/v1/customers");
+        if (!response) throw response;
+        const data = await response.json();
+        const frag = document.createDocumentFragment();
+        const itemList = document.getElementById("list");
+        data.map((e) => {
+          const li = document.createElement("li");
+          li.innerHTML = `<h3>${e.customer_name}</h3>
+                <h4>${e.product_name}</h4>
+                <h5>${e.price}</h5>
+                <p>${e.card_type}</p>
+                <p>${e.card_number}</p>
+               
+                `;
+          frag.append(li);
+        });
+        itemList.append(frag);
+      };
+      fetchRecords();
+    </script>
+  </body>
+</html>
